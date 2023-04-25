@@ -12,11 +12,11 @@ class AddStudentTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        service = new Service(new StudentXMLRepo("src/test/java/fisiere/Studenti.xml"), new StudentValidator(), null, null, null, null);
+        service = new Service(new StudentXMLRepo("src/Test/java/fisiere/Studenti.xml"), new StudentValidator(), null, null, null, null);
     }
 
     @org.junit.jupiter.api.Test
-    void testcase1() {
+    void Testcase1() {
         Student student = new Student("1", "Fernea", 933, "ledamtotcodu@gmail.com");
         if (service.findStudent("1") != null)
             service.deleteStudent("1");
@@ -24,7 +24,7 @@ class AddStudentTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testcase2() {
+    void Testcase2() {
         Student student = null;
         assertThrows(NullPointerException.class, () -> {
             service.addStudent(student);
@@ -32,7 +32,7 @@ class AddStudentTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testcase3() {
+    void Testcase3() {
         Student student = new Student("", "Fernea", 933, "ledamtotcodu@gmail.com");
         assertThrows(ValidationException.class, () -> {
             service.addStudent(student);
@@ -40,7 +40,7 @@ class AddStudentTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testcase4() {
+    void Testcase4() {
         Student student = new Student("1", "", 933, "ledamtotcodu@gmail.com");
         assertThrows(ValidationException.class, () -> {
             service.addStudent(student);
@@ -48,7 +48,7 @@ class AddStudentTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testcase5() {
+    void Testcase5() {
         Student student = new Student("1", "Fernea", -1, "ledamtotcodu@gmail.com");
         assertThrows(ValidationException.class, () -> {
             service.addStudent(student);
@@ -56,7 +56,7 @@ class AddStudentTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testcase6() {
+    void Testcase6() {
         Student student = new Student("1", "Fernea", 933, "");
         assertThrows(ValidationException.class, () -> {
             service.addStudent(student);
@@ -64,7 +64,7 @@ class AddStudentTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testcase7() {
+    void Testcase7() {
         Student student = new Student("1", "Fernea", 933, "ledamtotcodu@gmail.com");
         service.addStudent(student);
         assertNotNull(service.addStudent(student));
