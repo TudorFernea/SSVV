@@ -18,7 +18,7 @@ class AddTemaTest {
 
     @org.junit.jupiter.api.Test
     void Testcase1() {
-        Tema tema = new Tema("1", "abc", 6, 7);
+        Tema tema = new Tema("1", "abc", 6, 5);
         if (service.findTema("1") != null)
             service.deleteTema("1");
         assertNull(service.addTema(tema));
@@ -58,7 +58,7 @@ class AddTemaTest {
 
     @org.junit.jupiter.api.Test
     void Testcase6() {
-        Tema tema = new Tema("1", "abc", 6, 7);
+        Tema tema = new Tema("1", "abc", 6, 5);
         if (service.findTema("1") != null)
             service.deleteTema("1");
         service.addTema(tema);
