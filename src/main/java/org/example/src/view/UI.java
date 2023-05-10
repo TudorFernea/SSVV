@@ -5,6 +5,8 @@ import org.example.src.domain.Student;
 import org.example.src.domain.Tema;
 import org.example.src.service.Service;
 import org.example.src.validation.ValidationException;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -56,6 +58,8 @@ public class UI {
                 System.out.println("Date introduse gresit!");
             } catch (ArrayIndexOutOfBoundsException exception) {
                 System.out.println("Eroare la introducerea datelor!");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -329,7 +333,7 @@ public class UI {
     /**
      * Afiseaza comenzile disponibile pentru note
      */
-    private void meniuNote() {
+    private void meniuNote() throws IOException {
         while (true) {
             System.out.println("\n0.Iesire meniu note");
             System.out.println("1.Introducere nota");
@@ -359,7 +363,7 @@ public class UI {
      * Adauga o nota
      * @throws ValidationException daca nota exista deja
      */
-    private void adaugaNota() throws ValidationException {
+    private void adaugaNota() throws ValidationException, IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduceti id student: ");
         String idStudent = scanner.next();

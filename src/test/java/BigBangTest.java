@@ -9,20 +9,32 @@ import org.example.src.validation.NotaValidator;
 import org.example.src.validation.StudentValidator;
 import org.example.src.validation.TemaValidator;
 import org.example.src.validation.ValidationException;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class BigBangTest {
     private static Service service;
 
+    @Mock
+    private StudentXMLRepo studentXMLRepo;
+
+    @Mock
+    private TemaXMLRepo temaXMLRepo;
+
+    @Mock
+    private NotaXMLRepo notaXMLRepo;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        StudentXMLRepo r1 = new StudentXMLRepo("src/Test/java/fisiere/Studenti.xml");
+        MockitoAnnotations.initMocks(this); // this is needed for inititalizytion of mocks, if you use @Mock
         TemaXMLRepo r2 = new TemaXMLRepo("src/Test/java/fisiere/Teme.xml");
-        service = new Service(r1, new StudentValidator(),  r2, new TemaValidator(),  new NotaXMLRepo("src/Test/java/fisiere/Note.xml"), new NotaValidator(r1,r2));
+        service = new Service(studentXMLRepo, new StudentValidator(),  temaXMLRepo, new TemaValidator(), notaXMLRepo, new NotaValidator(studentXMLRepo,temaXMLRepo));
     }
 
     @org.junit.jupiter.api.Test
@@ -69,5 +81,40 @@ public class BigBangTest {
         assertThrows(ValidationException.class, () -> {
             service.addNota(nota, "Le dam tot codu");
         });
+    }
+
+    @org.junit.jupiter.api.Test
+    void Testcase5(){
+        Student student = new Student("1", "Fernea", 933, "ledamtotcodu@gmail.com");
+        when(studentXMLRepo.save(student)).thenReturn(null);
+        assertNull(service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void Testcase6(){
+        Student student = new Student("1", "Fernea", 933, "ledamtotcodu@gmail.com");
+        when(studentXMLRepo.save(student)).thenReturn(null);
+        assertNull(service.addStudent(student));
+
+        Tema tema = new Tema("1", "abc", 6, 5);
+        when(temaXMLRepo.save(tema)).thenReturn(null);
+        assertNull(service.addTema(tema));
+    }
+
+    @org.junit.jupiter.api.Test
+    void Testcase7() throws IOException {
+        Student student = new Student("1", "Fernea", 933, "ledamtotcodu@gmail.com");
+        when(studentXMLRepo.save(student)).thenReturn(null);
+        assertNull(service.addStudent(student));
+
+        Tema tema = new Tema("1", "abc", 6, 5);
+        when(temaXMLRepo.save(tema)).thenReturn(null);
+        assertNull(service.addTema(tema));
+
+        Nota nota = new Nota("1","1","1",10, LocalDate.of(2018,11,3));
+        when(notaXMLRepo.save(nota)).thenReturn(null);
+        when(studentXMLRepo.findOne(any())).thenReturn(student);
+        when(temaXMLRepo.findOne(any())).thenReturn(tema);
+        assertEquals(service.addNota(nota,"le dam tot codu"),10);
     }
 }
